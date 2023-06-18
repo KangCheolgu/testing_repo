@@ -1,0 +1,72 @@
+CREATE TABLE member ( --회원 정보 테이블 
+    id varchar2(50),    -- 아이디
+    pwd varchar2(50),   -- 비밀번호
+    name varchar2(50),  -- 이름
+    rep int default 0,  -- 0이 일반 계정
+    pnum varchar2(50),-- 휴대폰 번호
+    address varchar2(50), -- 주소 
+    
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE ARTICLE ( --기사 정보 테이블 
+
+    title varchar2(50), --제목
+    writedate date, -- 작성날짜
+    updatedate date,    -- 수정날짜
+    content varchar2(200),  -- 내용
+    articlenum int,     -- 기사 번호
+    type int,       -- 기사 종류
+    reccount int,   -- 추천 수
+    hotissue int DEFAULT 0,     -- 특종 여부
+    img varchar2(100),    -- 이미지
+    
+    ID VARCHAR2(50) REFERENCES MEMBER(ID), -- 작성자 
+    
+    PRIMARY KEY (articlenum)--기사 번호를 PK로
+);
+
+drop table reply;
+drop sequence reply_seq;
+CREATE TABLE REPLY (
+
+    -- 추가 및 변경 속성들 230618(강철구)
+    renum int,
+    retype int,
+    wdate varchar2(25),     -- 작성 날짜
+    -- --
+    rcomment varchar2(100), -- 댓글
+    good int DEFAULT 0,   -- 반응(좋아요)
+    bad int default 0,     -- 반응(싫어요)
+    
+   -- ID VARCHAR2(50) REFERENCES MEMBER(ID),
+    -- articlenum int REFERENCES ARTICLE(articlenum)
+    ID VARCHAR2(50),
+    articlenum int
+);
+to_char(sysdate,'YYYY/MM/DD HH24:MI:SS');
+CREATE SEQUENCE reply_seq
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+    
+
+select ID, rcomment, articlenum, good, bad, retype, renum, to_char(sysdate,'YYYY/MM/DD HH24:MI:SS') wdate
+from reply where articlenum = 1 and retype = 0 order by good-bad desc;
+
+INSERT INTO REPLY values (reply_SEQ.nextval, 0 ,  to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'), '이 연예인 너무 극혐이에요', 3, 1, 'kang', 1);
+
+
+
+select * from reply where articlenum = 1 and retype = 0 order by good-bad desc;
+select * from reply where articlenum = 1 and retype = 0 order by good-bad desc;
+
+
+select ID, rcomment, articlenum, good, bad, retype, renum, wdate 
+					 from reply where articlenum = 1 and retype = 0 order by wdate desc;
+update reply set good = good + 1 where renum = 10;
+commit;
