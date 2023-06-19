@@ -77,7 +77,37 @@ public class replyController extends HttpServlet {
 				return;
 				
 				
-			} else if (action.equals("/myreply.do")) {
+			}if (action.equals("/type1list.do")) {
+				
+				JSONObject totalObject;
+			
+				response.setContentType("application/x-json; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+				String articleNum = request.getParameter("articleNum");
+				String parentNum = request.getParameter("parentNum");
+				System.out.println(articleNum);
+				
+				// API 구하는 부분
+				List<replyVO> replyListType1  = new ArrayList<replyVO>();
+				
+				replyListType1 = rDao.showListType1(articleNum, parentNum);
+				
+				Map<Integer, replyVO> map = new HashMap<>();
+				
+				for(int i = 0; i<replyListType1.size(); i++) {
+					map.put(i, replyListType1.get(i));
+				}
+				
+				totalObject = new JSONObject(map);
+				
+				System.out.println(totalObject);
+				
+				out.print(totalObject);
+				
+				return;
+				
+				
+			}  else if (action.equals("/myreply.do")) {
 				
 				JSONObject totalObject;
 				
