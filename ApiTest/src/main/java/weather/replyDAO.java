@@ -60,7 +60,7 @@ public class replyDAO {
 			} else {
 				// 내 댓글만 보기
 				String query = "select ID, rcomment, articlenum, good, bad, parentNum, renum, wdate "
-						+ " from reply where articlenum = ? and id = ? order by wdate desc";
+						+ " from reply where articlenum = ? and id = ? and parentNum = 0 order by wdate desc";
 
 				pstmt = con.prepareStatement(query);
 
@@ -264,5 +264,64 @@ public class replyDAO {
 
 		return list;
 
+	}
+
+	public int deleteType0(String reNum) {
+		
+		try {
+			
+			Connection con = dataFactory.getConnection();
+
+			// 상위 타입 댓글들만 select
+			String query = "delete from reply where renum = ? and parentNum = 0";
+
+			pstmt = con.prepareStatement(query);
+
+			int replyNum = Integer.parseInt(reNum);
+
+			System.out.println(replyNum);
+			pstmt.setInt(1, replyNum);
+
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}
+
+		return 0;
+	}
+
+	public int deleteType1(String reNum, String pNum) {
+try {
+			
+			Connection con = dataFactory.getConnection();
+
+			// 상위 타입 댓글들만 select
+			String query = "delete from reply where renum = ? and parentNum = ?";
+
+			pstmt = con.prepareStatement(query);
+
+			int replyNum = Integer.parseInt(reNum);
+			int parentNum = Integer.parseInt(pNum);
+
+			System.out.println(replyNum);
+			pstmt.setInt(1, replyNum);
+			pstmt.setInt(2, parentNum);
+
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}
+
+		return 0;
 	}
 }

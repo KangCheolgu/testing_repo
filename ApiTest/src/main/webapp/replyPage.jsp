@@ -137,7 +137,7 @@ hr.type1 {
 				
 				success : function(result) { // 결과 성공 콜백함수
 					$(".reply-list").empty();
-					for(let i = 0; i < Object.keys(result).length ; i++ ){
+					for(l et i = 0; i < Object.keys(result).length ; i++ ){
 						
 						makeReply(result[i].userID,
 								result[i].date,
@@ -205,6 +205,7 @@ hr.type1 {
 						<a href="#" onclick="showType1(`+renum+`)" class="card-link">답글</a>
 						<a href="#"	onclick="getGood(`+renum+`)" class="card-link">추천 : ` + good + `</a>
 						<a href="#" onclick="getBad(`+renum+`)"	class="card-link">비추천 : ` + bad + `</a>
+						<a href="#" onclick="deleteType0(`+renum+`)"	class="card-link">삭제</a>
 						
 						<div class="type1-reply">
 						<p></p>
@@ -344,6 +345,77 @@ hr.type1 {
 		});
 			
 	}
+	
+	function deleteType0(renum) {
+		
+		$.ajax({
+			type : 'post',	
+			
+			// 경로를 바꿔야 한다면 이 변수를 바꾸기
+			url : '/trc/deletetype0.do',			
+			//
+			
+			//articleNum을 viewPage에서 받을수 있도록 한다.
+			//일단 임시로 1을 전달
+			dataType : 'text',   
+			data : {"replyNum" : renum},
+			
+			success : function(result) { // 결과 성공 콜백함수
+				
+				console.log(result);
+				if(result == "success"){
+					alert("해당 댓글을 삭제하였습니다.");
+					//새로고침
+					location.reload();
+						
+				} else {
+					alert("다시 시도해 주십시오");
+				}
+				
+			},
+			
+			error : function(request, status, error) { // 결과 에러 콜백함수
+				console.log(error)
+			}
+		});
+		
+	}
+	
+	function deleteType1(renum, parentnum) {
+		
+		$.ajax({
+			type : 'post',	
+			
+			// 경로를 바꿔야 한다면 이 변수를 바꾸기
+			url : '/trc/deletetype1.do',			
+			//
+			
+			//articleNum을 viewPage에서 받을수 있도록 한다.
+			//일단 임시로 1을 전달
+			dataType : 'text',   
+			data : {"replyNum" : renum, "parentNum" : parentnum},
+			
+			success : function(result) { // 결과 성공 콜백함수
+				
+				console.log(result);
+				if(result == "success"){
+					
+					alert("해당 댓글을 삭제하였습니다.");
+					showType1(parentnum);
+						
+				} else {
+					alert("다시 시도해 주십시오");
+				}
+				
+			},
+			
+			error : function(request, status, error) { // 결과 에러 콜백함수
+				console.log(error)
+			}
+		});
+		
+	}
+	
 	function makeReply1(id, date, comment, replyNum, parentNum) {
 		let replyId = "reply" + replyNum;
 		let parentId = "reply"+ parentNum;
@@ -351,7 +423,7 @@ hr.type1 {
 		$('#'+ parentId +' > div > div > .type1-reply-list').append(`
 				<div id="`+ replyId +`">
 					<div class="card-body sm">
-						<h6 class="card-title">`+ id + `</h6>
+						<h6 class="card-title">`+ id + `&nbsp&nbsp<a href="#" onclick="deleteType1(`+replyNum+`,`+parentNum+`)" class="card-link" style="font-size:8px">삭제</a></h6>  
 						<h7 class="card-subtitle mb-2 text-muted">`+ date +`</h7>
 						<p class="card-text">`+ comment +`</p>
 					<div>

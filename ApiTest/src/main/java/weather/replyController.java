@@ -213,6 +213,42 @@ public class replyController extends HttpServlet {
 					out.print("fail");
 				}
 				return;
+			} else if (action.equals("/deletetype0.do")) {
+				
+				int result;
+				response.setContentType("application/x-json; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+				String reNum = request.getParameter("replyNum");
+				
+				result = rDao.deleteType0(reNum);
+				
+				System.out.println(result);
+				
+				if( result == 0) {
+					out.print("success");
+				} else {
+					out.print("fail");
+				}
+				return;
+			} else if (action.equals("/deletetype1.do")) {
+				
+				int result;
+				response.setContentType("application/x-json; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+		        
+				String reNum = request.getParameter("replyNum");
+				String parentNum = request.getParameter("parentNum");
+				
+				result = rDao.deleteType1(reNum, parentNum);
+				
+				System.out.println(result);
+				
+				if( result == 0) {
+					out.print("success");
+				} else {
+					out.print("fail");
+				}
+				return;
 			}
 			
 		} catch (Exception e) {
