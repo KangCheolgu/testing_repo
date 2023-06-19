@@ -32,7 +32,7 @@ CREATE TABLE REPLY (
 
     -- 추가 및 변경 속성들 230618(강철구)
     renum int,
-    retype int,
+    parentNum int,
     wdate varchar2(25),     -- 작성 날짜
     -- --
     rcomment varchar2(100), -- 댓글
@@ -44,7 +44,7 @@ CREATE TABLE REPLY (
     ID VARCHAR2(50),
     articlenum int
 );
-to_char(sysdate,'YYYY/MM/DD HH24:MI:SS');
+
 CREATE SEQUENCE reply_seq
        INCREMENT BY 1
        START WITH 1
@@ -58,15 +58,18 @@ CREATE SEQUENCE reply_seq
 select ID, rcomment, articlenum, good, bad, retype, renum, to_char(sysdate,'YYYY/MM/DD HH24:MI:SS') wdate
 from reply where articlenum = 1 and retype = 0 order by good-bad desc;
 
-INSERT INTO REPLY values (reply_SEQ.nextval, 0 ,  to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'), '이 연예인 너무 극혐이에요', 3, 1, 'kang', 1);
+INSERT INTO REPLY values (reply_SEQ.nextval, 0 ,  to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'), '이 연예인 너무 극혐이에요', 3, 2, 'kang', 1);
+INSERT INTO REPLY values (reply_SEQ.nextval, 1 ,  to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'), '111', 0, 0, 'kang', 1);
 
 
 
-select * from reply where articlenum = 1 and retype = 0 order by good-bad desc;
-select * from reply where articlenum = 1 and retype = 0 order by good-bad desc;
+select * from reply where articlenum = 1 and parentnum = 1 order by good-bad desc;
 
+
+select ID, rcomment, articlenum, good, bad, parentNum, renum, wdate
+from reply where articlenum = 1 and parentNum = 1 order by wdate desc;
 
 select ID, rcomment, articlenum, good, bad, retype, renum, wdate 
-					 from reply where articlenum = 1 and retype = 0 order by wdate desc;
+from reply where articlenum = 1 and retype = 0 order by wdate desc;
 update reply set good = good + 1 where renum = 10;
 commit;
