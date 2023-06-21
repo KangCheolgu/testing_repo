@@ -6,7 +6,10 @@
 
 <%
 request.setCharacterEncoding("UTF-8");
-String id = request.getParameter("id");
+session.setAttribute("id", "kang");
+session.setAttribute("articleNum", "1");
+String id = (String)session.getAttribute("id");
+String aNum = (String)session.getAttribute("articleNum");
 %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -114,9 +117,11 @@ hr.type1 {
 	$(document).ready(function() {
 		
 		//댓글 초기화
-			resetList(0);
+		
+		resetList(0);
 
-	}); 
+	});
+	
 	
 	function resetList(type) {
 		
@@ -133,11 +138,11 @@ hr.type1 {
 				//일단 임시로 1을 전달 
 				///////////////////////////sortType에 아이디 넣어야 함
 				dataType : 'json',   
-				data : {"articleNum" : "1", "sortType" : "kang"},
+				data : {"articleNum" : "${aNum}", "sortType" : "${id}"},
 				
 				success : function(result) { // 결과 성공 콜백함수
 					$(".reply-list").empty();
-					for(l et i = 0; i < Object.keys(result).length ; i++ ){
+					for(let i = 0; i < Object.keys(result).length ; i++ ){
 						
 						makeReply(result[i].userID,
 								result[i].date,
@@ -402,6 +407,7 @@ hr.type1 {
 					
 					alert("해당 댓글을 삭제하였습니다.");
 					showType1(parentnum);
+					$('#reply'+parentnum+' > div > .type1-reply').show();
 						
 				} else {
 					alert("다시 시도해 주십시오");
@@ -438,8 +444,8 @@ hr.type1 {
 		
 		console.log(id);
 		
-		$('#'+id+' > div > .type1-reply').show();
-		
+		$('#'+id+' > div > .type1-reply').toggle();
+
 		$.ajax({
 			type : 'post',	
 			
@@ -504,6 +510,7 @@ hr.type1 {
 					alert("답변을 등록 하셨습니다.");
 					
 					showType1(parentNum);
+					$('#reply'+parentNum+' > div > .type1-reply').show();
 					
 				} else {
 					alert("다시 시도해 주십시오");
@@ -519,6 +526,17 @@ hr.type1 {
 		});
 		
 	}
+	
+	 function needLogin(){
+			
+		let id = <%= id %> ;
+		
+		if( id == null ){
+			$(".reply-insert").hide();
+			
+		}
+	} 
+	
 </script>
 </head>
 <body>
