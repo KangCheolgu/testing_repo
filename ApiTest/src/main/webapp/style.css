@@ -136,7 +136,7 @@ menu {
 
 section {
     display: flex;
-	background: #ABABAB;
+	/* background: #ABABAB; */
 	grid-area: section;
 	padding : 2px;    
 }
@@ -158,6 +158,48 @@ section {
 	margin: 3px auto 5px;
 	background-color: #fff;
 	border-radius: 5px;
+}
+
+/* weatherPage  */
+
+.weather-section {
+	margin:3px auto;
+}
+
+#mapList {
+	display:inline;
+	float: left;
+	height : 300px;
+	width : 110px;
+	overflow: auto;
+	margin:5px 0 0 0;
+	font-size:14px;
+}
+
+#mapList2 {
+	margin-left: 10px;
+	float: left;
+	width : 110px;
+}
+
+#detail-info{
+	width : 200px;
+	float: right;
+	display:inline-block;
+	text-align: center;
+	margin : 0 auto;
+}
+
+.APIresult {
+	width : 200px;
+}
+
+.weather-title {
+	text-align: center;
+	font-size: 30px;
+}
+tr {
+	margin: 5px;
 }
 
 

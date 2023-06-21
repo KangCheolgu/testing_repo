@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -40,23 +39,26 @@ public class TestWeatherController extends HttpServlet {
 		String nextPage = "";
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		HttpSession session;
 		
 		String action = request.getPathInfo();
+		System.out.println("action: " + action);
 		
 		WeatherDAO wDao = new WeatherDAO();
 		
 		try {
 			String mapName = null;
 			
-			if (action.equals("/getco.do")) {
+			if (action==null) {
+				
+				nextPage="/weatherPage/WeatherPage.jsp";
+			}else if (action.equals("/getco.do")) {
 				
 				JSONObject totalObject;
 			
 				response.setContentType("application/x-json; charset=UTF-8");
 		        PrintWriter out = response.getWriter();
 				mapName = request.getParameter("mapName");
-				//System.out.println(mapName);
+				System.out.println(mapName);
 				
 				// API 구하는 부분
 				
@@ -71,7 +73,7 @@ public class TestWeatherController extends HttpServlet {
 				
 				totalObject = new JSONObject(map);
 				
-				//System.out.println(totalObject);
+				System.out.println(totalObject);
 				
 				out.print(totalObject);
 				
@@ -103,7 +105,7 @@ public class TestWeatherController extends HttpServlet {
 				
 				totalObject = new JSONObject(map);
 				
-				//System.out.println(totalObject);
+				System.out.println(totalObject);
 				
 				out.print(totalObject);
 				
@@ -116,6 +118,8 @@ public class TestWeatherController extends HttpServlet {
 		        PrintWriter out = response.getWriter();
 				mapName = request.getParameter("mapName");
 				
+				System.out.println(mapName);
+				
 				// 리스트 맴 json 생성
 				JSONObject totalObject2;
 				
@@ -126,6 +130,8 @@ public class TestWeatherController extends HttpServlet {
 				//하위 주소 리스트 JSON
 				weatherList =  wDao.lev2List(mapName);
 				
+				System.out.println(weatherList.get(0));
+				
 				for(int i = 0; i<weatherList.size(); i++) {
 					map2.put(i, weatherList.get(i));
 				}
@@ -133,7 +139,7 @@ public class TestWeatherController extends HttpServlet {
 				totalObject2 = new JSONObject(map2);
 				//하위 주소 리스트 JSON 생성
 				
-				//System.out.println(totalObject2);
+				System.out.println(totalObject2);
 				
 				out.print(totalObject2);
 				

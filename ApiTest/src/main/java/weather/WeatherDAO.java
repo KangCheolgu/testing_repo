@@ -50,8 +50,8 @@ public class WeatherDAO {
 				String coX = rs.getString("co_X");
 				String coY = rs.getString("co_Y");
 
-				//System.out.print(rs.getString("co_X"));
-				//System.out.println(rs.getString("co_Y"));
+				System.out.print(rs.getString("co_X"));
+				System.out.println(rs.getString("co_Y"));
 
 				vo.setCoX(coX);
 				vo.setCoY(coY);
@@ -67,15 +67,12 @@ public class WeatherDAO {
 			LocalTime nowTime = LocalTime.now();
 			LocalTime beforeOneHour = nowTime.minusHours(1);
 			DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HHmm");
-				
 			String formatedTime = beforeOneHour.format(formatterTime);
 
 			// api 검색 포맷에 맟준 날짜와 시간
 			vo.setCurrentDate(formatedDate);
 			vo.setCurrentTime(formatedTime);
 
-			
-			
 			rs.close();
 			pstmt.close();
 			con.close();
@@ -102,7 +99,7 @@ public class WeatherDAO {
 			ResultSet rs = pstmt.executeQuery();
 
 			// 좌표 get
-			//System.out.println(_lev2);
+			System.out.println(_lev2);
 			
 			while (rs.next()) {
 
@@ -156,7 +153,7 @@ public class WeatherDAO {
 
 			pstmt = con.prepareStatement(query);
 
-			//System.out.println(_lev1);
+			System.out.println(_lev1);
 
 			pstmt.setString(1, _lev1);
 			pstmt.setString(2, _lev1);
@@ -181,7 +178,7 @@ public class WeatherDAO {
 			}
 			;
 
-			//System.out.println(list);
+			System.out.println(list);
 
 			rs.close();
 			pstmt.close();
@@ -222,7 +219,7 @@ public class WeatherDAO {
 				pstmt.setString(1, _lev1);
 			}
 			
-			//System.out.println(query);
+			System.out.println(query);
 			
 			ResultSet rs = pstmt.executeQuery();
 
@@ -237,10 +234,10 @@ public class WeatherDAO {
 
 				list.add(vo);
 
-				//System.out.println(lev2);
+				System.out.println(lev2);
 			}
 
-			//System.out.println(list);
+			System.out.println(list);
 
 			rs.close();
 			pstmt.close();
@@ -268,10 +265,10 @@ public class WeatherDAO {
 			pstmt.setString(1, _lev1);
 			pstmt.setString(2, _lev2 + "%");
 
-			//System.out.println(_lev1);
-			//System.out.println(_lev2);
+			System.out.println(_lev1);
+			System.out.println(_lev2);
 
-			//System.out.println(query);
+			System.out.println(query);
 
 			ResultSet rs = pstmt.executeQuery();
 

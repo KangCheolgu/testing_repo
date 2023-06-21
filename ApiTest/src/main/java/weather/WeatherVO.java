@@ -17,4 +17,7 @@ public class WeatherVO {
 	private String currentDate;
 	private String currentTime;
 	
+	public WeatherVO() {
+		
+	}
 }

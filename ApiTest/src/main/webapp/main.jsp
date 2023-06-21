@@ -3,6 +3,37 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%
+Cookie[] cookies = request.getCookies();
+String cookieName = "";
+String cookieValue = "";
+
+if (cookies != null) {
+	for (int i = 0; i < cookies.length; i++) {
+		if (cookies[i].getName().equals("cookieName")) {
+			cookieName = cookies[i].getName();
+			cookieValue = cookies[i].getValue();
+		}
+	}
+}
+%>
+
+<%!private String getCookieValue(Cookie[] cookies, String name) {
+
+		String value = null;
+
+		if (cookies == null)
+			return null;
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals(name))
+				return cookie.getValue();
+		}
+		return null;
+	}%>
+
+<%
+String id = getCookieValue(cookies, "loginId");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,19 +55,26 @@
 	<menu class="menu">
 		<div class="navibar">
 			<ul class="navi">
-
-				<li><div class="navi-text">
+				<li>
+					<div class="navi-text">
 						<a href="#">시&nbsp&nbsp사</a>
-					</div></li>
-				<li><div>
+					</div>
+				</li>
+				<li>
+					<div>
 						<a href="#">정&nbsp&nbsp치</a>
-					</div></li>
-				<li><div>
+					</div>
+				</li>
+				<li>
+					<div>
 						<a href="#">연&nbsp&nbsp예</a>
-					</div></li>
-				<li><div style="border-right: solid 1px">
+					</div>
+				</li>
+				<li>
+					<div style="border-right: solid 1px">
 						<a href="#">스 포 츠</a>
-					</div></li>
+					</div>
+				</li>
 
 			</ul>
 		</div>
@@ -44,9 +82,7 @@
 
 	<section>
 		<div class="home-section">
-			<div class="head-line">
-					
-			</div>
+			<div class="head-line"></div>
 			<div class="card-list">
 				<div class="card">
 					<img src="./img/logo2.png" class="card-img-top" alt="...">
@@ -101,7 +137,40 @@
 		</div>
 	</section>
 
+
+
+	<c:set var="id" value="<%=id%>" />
 	<aside>
+		<c:choose>
+			<c:when test="${empty id}">
+				<div class="login" style="padding-top: 25px">
+					<p></p>
+					<div>
+						<button type="button"
+							onclick="location.href='${contextPath }/member/loginForm.do'"
+							class="btn btn-outline-warning">로그인 하기</button>
+						<br /> <a href="${contextPath }/member/join.do" style="font-size: 8px">아직 회원이 아니신가요?</a>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="login" style="padding-top: 25px">
+					<p></p>
+					<div>
+					<div>
+						<h5>${id} 님 환영합니다!</h5>
+					</div>
+						<button type="button"
+							onclick="location.href='${contextPath }/member/logout.do'"
+							class="btn btn-outline-warning btn-sm">로그아웃</button>
+							
+						<button type="button"
+							onclick="location.href='${contextPath }/member/mypage.do'"
+							class="btn btn-outline-warning btn-sm">마이페이지</button>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<jsp:include page="./common/aside.jsp"></jsp:include>
 	</aside>
 	<footer class="footer">
