@@ -1,0 +1,187 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Stylish&display=swap');
+body { 
+    width: 1000px;
+	font-family: segoe-ui_normal,Segoe UI,Segoe,Segoe WP,Helvetica Neue,Helvetica,sans-serif;
+	display: grid;
+	grid-template-areas: 
+    "header header" 
+    "menu menu"
+    "section aside"
+    "footer footer";
+	grid-template-rows: 100px 60x auto 80px;
+	grid-template-columns: 750px 250px ;
+	grid-gap: 3px;
+    margin: 10px auto;  
+}
+
+#body {
+	margin: 10px auto; 
+}
+
+header {
+	background: #fff;
+	grid-area: header;
+}
+.logo {
+	color : #000;
+    text-align: center;
+    margin: 5px auto;
+}
+
+
+aside {
+	background-color:#fff;
+	display: flex;
+    flex-direction: column;
+	grid-area: aside; 
+}
+.login {
+	text-align: center;
+    height: 150px;
+    border-style: solid;
+    border-width: 2px;
+    margin-bottom: 5px; 
+}
+.weather {
+    height: 150px;
+    border-style: solid;
+    border-width: 2px; 
+    margin-bottom: 5px;
+}
+.weather > div {
+	margin:0 auto;
+	text-align: center;
+}
+.hot-issue-rank{
+    height: 325px;
+    border-style: solid;
+    border-width: 2px; 
+}
+
+
+.footer {
+	background: orangered;
+	grid-area: footer;
+	text-align: center;
+	font-size: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+footer > div {
+	height : 60%;
+	
+}
+
+header,  footer {
+	padding: 5px;
+}
+
+
+/*       메뉴 판 CSS        */
+menu {
+	color: #fff;
+	background-color:orange;
+	grid-area: menu; 
+    background-color: orange;
+    margin: 0 0 0 0;
+}
+
+.menu {
+	width: 100%;
+	height: 40px;
+	z-index: 1;
+}
+
+.navi { 
+	display: inline-block;
+	margin-left: 125px;
+}
+
+.navi>li {
+	display:block;
+	float:left;
+	width: 1fr;
+	height: 40px;
+	list-style: none;
+	text-align: center;
+	border-left: solid 1px;
+
+}
+
+.navi > li > div {
+	display:block;
+	height: 40px;
+	width: 150px; 
+	padding-top: 11px;
+}
+
+.navi > li > div > a {
+	
+	line-height: 15px;
+	font-size: 20px;
+	text-align: center;
+	color:#ffffff;
+	text-decoration: none;
+	font-family: 'Black Han Sans' ,Stylish, sans;
+	
+}
+
+.navi>li>div:hover {
+	background-color: #30a3f3;
+}
+
+
+
+section {
+    display: flex;
+	background: #ABABAB;
+	grid-area: section;
+	padding : 2px;    
+}
+
+.card img {
+	height: 180px;
+}
+.card {
+	width : 244.33px;
+	height : 360px; 
+	float : left;
+	margin : 2px; 
+}
+
+.head-line {
+	width : 740px;
+	height: 400px;
+
+	margin: 3px auto 5px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
