@@ -39,7 +39,7 @@ String id = getCookieValue(cookies, "loginId");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath }/style.css" rel="stylesheet" type="text/css" />
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -264,15 +264,11 @@ function detailData2(mapName,str1, str2) {
 				else if ( PTY == '6') PTYString = "빗방울눈날림";
 				else if ( PTY == '7') PTYString = "눈날림";
 				
-				if(PTY != '0') {
-					document.getElementById("PTY").innerHTML= "강수형태 :" + PTYString;
-					
-				}
-				
 				document.getElementById("T1H").innerHTML= T1H;
 				document.getElementById("RN1").innerHTML= RN1;
 				document.getElementById("REH").innerHTML= REH;
 				document.getElementById("WSD").innerHTML= WSD;
+				document.getElementById("PTY").innerHTML= PTYString;
 			}
 		};
 
@@ -321,31 +317,7 @@ function detailData2(mapName,str1, str2) {
 	<jsp:include page="${contextPath }/common/header.jsp"></jsp:include>
 
 	<menu class="menu">
-		<div class="navibar">
-			<ul class="navi">
-				<li>
-					<div class="navi-text">
-						<a href="#">시&nbsp&nbsp사</a>
-					</div>
-				</li>
-				<li>
-					<div>
-						<a href="#">정&nbsp&nbsp치</a>
-					</div>
-				</li>
-				<li>
-					<div>
-						<a href="#">연&nbsp&nbsp예</a>
-					</div>
-				</li>
-				<li>
-					<div style="border-right: solid 1px">
-						<a href="#">스 포 츠</a>
-					</div>
-				</li>
-
-			</ul>
-		</div>
+		<jsp:include page="${contextPath }/common/menu.jsp"></jsp:include>	
 	</menu>
 
 	<section>
@@ -391,30 +363,18 @@ function detailData2(mapName,str1, str2) {
 			</table> --%>
 			
 				<div class="weather-title">
-					현재 날씨
-				</div>
-				<div>
-					<div class="map"><jsp:include page="Map.jsp"></jsp:include></div>
-				</div>
-			
-				<div>
-					<div  id="wArea">상세 구역 선택</div>
+					<div  id="wArea"> 날씨가 궁금한 구역의 지도를 선택해 주세요!</div>
+					<p></p>
 				</div>
 				
-				<div id = "mapList">
-			
-				</div>
-				<div id="mapList2">
-			
-				</div>
-			
-					<div id="detail-info" >
-						<!-- <div id="wAreaDetail">상세정보</div> <br />
-						<div>기온 :<span id="T1H" value="기온"></span></div>	
-						<div>강수량 : <span id="RN1" value="강수량"></span></div>
-						<div>습도 : <span id="REH" value="습도"></span></div>	
-						<div><span id="PTY" value="강수형태"></span></div>	
-						<div>풍속 : <span id="WSD" value="풍속"></span></div> -->	
+				<TABLE class="weather-info">
+				<tr>
+					<td rowspan="2">
+					
+						<div class="map"><jsp:include page="Map.jsp"></jsp:include></div>
+					</td>
+					<td>
+						<div id="detail-info" >
 						
 						<table class="APIresult">
 							<tr>
@@ -433,48 +393,34 @@ function detailData2(mapName,str1, str2) {
 								<td>강 수 량</td><td><span id="RN1" value="강수량">&nbsp</span></td>
 							</tr>
 							<tr>
-								<td colspan="2"><span id="PTY" value="강수형태"></span></td>
+								<td>강수형태</td><td><span id="PTY" value="강수형태">&nbsp</span></td>
 							</tr>
 						</table>
 					</div>
-			</div>
-		
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id ="mapLists">
+							<div id = "mapList">
+				
+							</div>
+							<div id="mapList2">
+					
+							</div>
+						</div>	
+					</td>
+				</tr>
+			</TABLE>
+				
+		</div>
+			
 	</section>
 
 
 
 	<c:set var="id" value="<%=id%>" />
 	<aside>
-		<c:choose>
-			<c:when test="${empty id}">
-				<div class="login" style="padding-top: 25px">
-					<p></p>
-					<div>
-						<button type="button"
-							onclick="location.href='${contextPath }/member/loginForm.do'"
-							class="btn btn-outline-warning">로그인 하기</button>
-						<br /> <a href="${contextPath }/member/join.do" style="font-size: 8px">아직 회원이 아니신가요?</a>
-					</div>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="login" style="padding-top: 25px">
-					<p></p>
-					<div>
-					<div>
-						<h5>${id} 님 환영합니다!</h5>
-					</div>
-						<button type="button"
-							onclick="location.href='${contextPath }/member/logout.do'"
-							class="btn btn-outline-warning btn-sm">로그아웃</button>
-							
-						<button type="button"
-							onclick="location.href='${contextPath }/member/mypage.do'"
-							class="btn btn-outline-warning btn-sm">마이페이지</button>
-					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
 		<jsp:include page="${contextPath }/common/aside.jsp"></jsp:include>
 	</aside>
 	<footer class="footer">

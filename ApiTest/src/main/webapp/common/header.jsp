@@ -6,6 +6,6 @@
 
 <header>
 	<div class="logo">
-			<a href="${contextPath}/main.jsp"><img src="./img/logo2.png"></a>
+			<a href="${contextPath}/main.jsp"><img src="${contextPath }/img/logo2.png"></a>
 	</div>
 </header>

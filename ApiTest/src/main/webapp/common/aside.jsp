@@ -4,10 +4,70 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
+<%
+Cookie[] cookies = request.getCookies();
+String cookieName = "";
+String cookieValue = "";
 
+if (cookies != null) {
+	for (int i = 0; i < cookies.length; i++) {
+		if (cookies[i].getName().equals("cookieName")) {
+			cookieName = cookies[i].getName();
+			cookieValue = cookies[i].getValue();
+		}
+	}
+}
+%>
 
+<%!private String getCookieValue(Cookie[] cookies, String name) {
+
+		String value = null;
+
+		if (cookies == null)
+			return null;
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals(name))
+				return cookie.getValue();
+		}
+		return null;
+	}%>
+
+<%
+String id = getCookieValue(cookies, "loginId");
+%>
+<c:set var="id" value="<%=id%>" />
+		<c:choose>
+			<c:when test="${empty id}">
+				<div class="login" style="padding-top: 25px">
+					<p></p>
+					<div>
+						<button type="button"
+							onclick="location.href='${contextPath }/member/loginForm.do'"
+							class="btn btn-outline-warning">로그인 하기</button>
+						<br /> <a href="${contextPath }/member/join.do" style="font-size: 8px">아직 회원이 아니신가요?</a>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="login" style="padding-top: 25px">
+					<p></p>
+					<div>
+					<div>
+						<h5>${id} 님 환영합니다!</h5>
+					</div>
+						<button type="button"
+							onclick="location.href='${contextPath }/member/logout.do'"
+							class="btn btn-outline-warning btn-sm">로그아웃</button>
+							
+						<button type="button"
+							onclick="location.href='${contextPath }/member/mypage.do'"
+							class="btn btn-outline-warning btn-sm">마이페이지</button>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 <!-- 이미지 사이즈 236px 146px  -->
-<div class="weather"><div><a href="${contextPath }/twc"><img src="./img/todayweather.png"></a></div></div>
+<div class="weather"><div><a href="${contextPath }/twc"><img src="${contextPath }/img/todayweather.png"></a></div></div>
 <div class="hot-issue-rank">
 	<div class="alert alert-danger" role="alert" style="text-align: center; ">
 		<!-- 이모티콘 -->
@@ -18,7 +78,7 @@
 	</div>
 	<div class="hotissueList">
 		<ol>
-			<a href=""><li>핫이슈 랭킹 </li></a>	
+			<a href="${contextPath }/articlePage/viewpage.jsp"><li>핫이슈 랭킹 </li></a>	
 			<a href=""><li>핫이슈 랭킹 </li></a>	
 			<a href=""><li>핫이슈 랭킹 </li></a>	
 			<a href=""><li>핫이슈 랭킹 </li></a>	
@@ -31,4 +91,9 @@
 		
 		</ol>
 	</div> 
+</div>
+<div>
+	<a href="${contextPath }/news/addarticleForm.do">
+		기사 작성
+	</a>
 </div>
